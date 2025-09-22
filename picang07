@@ -1,0 +1,32 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      python: 3.9   # Example runtime
+    commands:
+      - echo "Installing dependencies..."
+      - pip install -r requirements.txt
+
+  pre_build:
+    commands:
+      - echo "Running pre-build steps..."
+      - python --version
+      - pip list
+
+  build:
+    commands:
+      - echo "Starting build..."
+      - python setup.py install
+      - pytest tests/   # Run tests
+
+  post_build:
+    commands:
+      - echo "Build completed successfully!"
+      - echo "Packaging artifacts..."
+      - zip -r app.zip .
+
+artifacts:
+  files:
+    - app.zip
+    - '**/*.py'
